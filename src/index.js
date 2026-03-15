@@ -4,11 +4,12 @@ const {PORT}=require('./config/server_config.js')
 const jobs=require('./utils/job.js')
 const {sendBasicEmail}=require('./services/email_service.js')
 
+const {createChannel}=require('./utils/message_Queue.js')
 
 const TicketController=require('./controller/ticketControlleer.js')
 
 
-const setupAndStartServer=()=>{
+const setupAndStartServer=async  ()=>{
 
 
     const app=express();
@@ -17,13 +18,12 @@ const setupAndStartServer=()=>{
 
     app.use(bodyParser.urlencoded({extended:true}))
 
-
     app.post('/api/v1/tickets',TicketController.create)
 
 
     app.listen(PORT,()=>{
         console.log(`server started at ${PORT}`);
-        jobs();
+        // jobs();
         // sendBasicEmail(
         //     'support@admin.com',
         //     'anushkamotani@gmail.com',
